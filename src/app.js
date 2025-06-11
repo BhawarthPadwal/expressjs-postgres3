@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
+
 const usersRoutes = require('./routes/usersRoutes');
 const campaignsRoutes = require('./routes/campaignsRoutes');
+const votesRoutes = require('./routes/votesRoutes');
+
 const sequelize = require('./config/database');
 const users = require('./models/user');
 const campaigns = require('./models/campaign');
@@ -9,9 +12,10 @@ const campaigns = require('./models/campaign');
 app.use(express.json());
 app.use('/users', usersRoutes);
 app.use('/campaigns', campaignsRoutes);
+app.use('/votes', votesRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the API');
+    res.send('Welcome to the Campaign API');
 });
 
 const PORT = process.env.PORT || 5000;

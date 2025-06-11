@@ -29,7 +29,7 @@ exports.getAllCampaigns = async (req, res) => {
 }
 
 exports.getCampaignsByUserId = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.params.userId; // error prone "userId" should match to route
     try {
         const campaigns = await Campaigns.findAll({ where: { users_id: userId } });
         if (campaigns.length === 0) {
