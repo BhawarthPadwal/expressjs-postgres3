@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize")
 
 const sequelize = require("../config/database");
+const Campaigns = require("./campaign"); // Assuming campaigns.js is in the same directory
 
 const Vote = sequelize.define("Votes", {
     campaignId: {

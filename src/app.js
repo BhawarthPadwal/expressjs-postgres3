@@ -8,6 +8,8 @@ const votesRoutes = require('./routes/votesRoutes');
 const sequelize = require('./config/database');
 const users = require('./models/user');
 const campaigns = require('./models/campaign');
+require("./models/association"); // Ensure associations are set up
+
 
 app.use(express.json());
 app.use('/users', usersRoutes);
