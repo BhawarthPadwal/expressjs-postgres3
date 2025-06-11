@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express();
 const usersRoutes = require('./routes/usersRoutes');
+const campaignsRoutes = require('./routes/campaignsRoutes');
 const sequelize = require('./config/database');
 const users = require('./models/user');
+const campaigns = require('./models/campaign');
 
 app.use(express.json());
 app.use('/users', usersRoutes);
+app.use('/campaigns', campaignsRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the API');
