@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("votes", "shehzaan", "", {
+const sequelize = new Sequelize("newdb", "postgres", "9876", {
   host: "localhost",
   dialect: "postgres", // or 'postgres', 'sqlite', etc.
   logging: false, // Disable logging; default: console.log
