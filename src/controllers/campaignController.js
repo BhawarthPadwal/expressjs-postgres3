@@ -257,3 +257,48 @@ exports.deleteCampaignByUserId = async (req, res) => {
   }
 };
 
+exports.updateCampaignById = async (req, res) => {
+  const { userId, campaignId, name, description, startDate, endDate } = req.body;
+  console.log("Update request:", req.body); // Debugging
+
+  // Validate required identifiers
+  if (!userId || !campaignId) {
+    return res.status(400).json({ message: "userId and campaignId are required" });
+  }
+
+  try {
+    const campaign = await Campaigns.findOne({
+      where: {
+        campaignId,
+        users_id: userId,
+      },
+    });
+
+    if (!campaign) {
+      return res.status(404).json({ message: "Campaign not found or not authorized" });
+    }
+
+    // Update only allowed fields if they are provided
+    if (name !== undefined) campaign.name = name;
+    if (description !== undefined) campaign.description = description;
+    if (startDate !== undefined) campaign.startDate = startDate;
+    if (endDate !== undefined) campaign.endDate = endDate;
+
+    await campaign.save();
+
+    res.status(200).json({
+      message: "Campaign updated successfully",
+      updatedFields: {
+        ...(name && { name }),
+        ...(description && { description }),
+        ...(startDate && { startDate }),
+        ...(endDate && { endDate }),
+      },
+    });
+  } catch (error) {
+    console.error("Error updating campaign:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
