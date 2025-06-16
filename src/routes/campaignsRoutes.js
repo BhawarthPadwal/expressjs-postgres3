@@ -6,5 +6,6 @@ router.get("/:id", campaignController.getCampaignById);
 router.get("/", campaignController.getAllCampaigns);
 router.get("/user/:userId", campaignController.getCampaignsByUserId);
 router.post("/", campaignController.createCampaign);
+router.delete("/delete", campaignController.deleteCampaignByUserId);
 
 module.exports = router;

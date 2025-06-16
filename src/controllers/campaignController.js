@@ -226,3 +226,34 @@ exports.createCampaign = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.deleteCampaignByUserId = async (req, res) => {
+  const { userId, campaignId } = req.body;
+  console.log("Body:", req.body); // Debugging
+
+  if (!userId || !campaignId) {
+    return res.status(400).json({ message: "userId and campaignId are required" });
+  }
+
+  try {
+    const campaign = await Campaigns.findOne({
+      where: {
+        campaignId,
+        users_id: userId,
+      },
+    });
+
+    if (!campaign) {
+      return res.status(404).json({ message: "Campaign not found or not authorized" });
+    }
+
+    await Votes.destroy({ where: { campaignId } });
+    await campaign.destroy();
+
+    res.status(200).json({ message: "Campaign deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting campaign:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
